@@ -2,10 +2,10 @@ function コマンド受信 (コマンド: string) {
     serial.writeLine(コマンド)
     cmd = コマンド.split(",")
     if (cmd[0] == control.deviceName()) {
-        if (cmd[2] == "START") {
+        if (cmd[1].charAt(0) == "S") {
             mode = 1
-            waitTime = parseFloat(cmd[3])
-            dataTime = parseFloat(cmd[4])
+            waitTime = parseFloat(cmd[2])
+            dataTime = parseFloat(cmd[3])
             startTime = input.runningTime()
             basic.showLeds(`
                 . # # # .
@@ -24,7 +24,7 @@ function 赤外線受信 () {
                 dataStratTime = input.runningTime()
             } else {
                 if (input.runningTime() > dataStratTime + dataTime) {
-                    radio.sendString("" + cmd[1] + "," + control.deviceName() + "," + "HIT")
+                    radio.sendString("" + control.deviceName() + "," + "HIT")
                     basic.showIcon(IconNames.Chessboard)
                     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.UntilDone)
                     basic.clearScreen()
@@ -36,7 +36,7 @@ function 赤外線受信 () {
             led.unplot(2, 2)
         }
     } else {
-        radio.sendString("" + cmd[1] + "," + control.deviceName() + "," + "TO")
+        radio.sendString("" + control.deviceName() + "," + "TO")
         mode = 0
         basic.clearScreen()
     }
