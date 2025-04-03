@@ -29,6 +29,7 @@ function 赤外線受信 () {
                     basic.showIcon(IconNames.Chessboard)
                     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.UntilDone)
                     basic.clearScreen()
+                    led.unplot(2, 2)
                 }
             }
             led.plot(2, 2)
@@ -41,6 +42,7 @@ function 赤外線受信 () {
         radio.sendString("" + control.deviceName() + "," + "TO")
         mode = 0
         basic.clearScreen()
+        led.unplot(2, 2)
     }
 }
 radio.onReceivedString(function (receivedString) {
@@ -70,6 +72,7 @@ basic.forever(function () {
         saveString = ""
         if (radioGroup != 0) {
             watchfont.showNumber2(radioGroup)
+            radio.setTransmitPower(7)
         }
     } else {
         if (saveString != "") {
