@@ -24,6 +24,7 @@ function 赤外線受信 () {
                 dataStratTime = input.runningTime()
             } else {
                 if (input.runningTime() > dataStratTime + dataTime) {
+                    mode = 0
                     radio.sendString("" + control.deviceName() + "," + "HIT")
                     basic.showIcon(IconNames.Chessboard)
                     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.UntilDone)
@@ -36,6 +37,7 @@ function 赤外線受信 () {
             led.unplot(2, 2)
         }
     } else {
+        mode = 0
         radio.sendString("" + control.deviceName() + "," + "TO")
         mode = 0
         basic.clearScreen()
