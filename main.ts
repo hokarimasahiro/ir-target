@@ -1,7 +1,10 @@
 function コマンド受信 (コマンド: string) {
     serial.writeLine(コマンド)
     cmd = コマンド.split(",")
-    if (cmd[0] == control.deviceName()) {
+    if (cmd[1] == "RESET") {
+        radioGroup = 0
+        getradiogroup.initRadioGroup()
+    } else if (cmd[0] == control.deviceName()) {
         if (cmd[1].charAt(0) == "S") {
             mode = 1
             waitTime = parseFloat(cmd[2])
@@ -29,20 +32,16 @@ function 赤外線受信 () {
                     basic.showIcon(IconNames.Chessboard)
                     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.UntilDone)
                     basic.clearScreen()
-                    led.unplot(2, 2)
                 }
             }
-            led.plot(2, 2)
         } else {
             dataStratTime = 0
-            led.unplot(2, 2)
         }
     } else {
         mode = 0
         radio.sendString("" + control.deviceName() + "," + "TO")
         mode = 0
         basic.clearScreen()
-        led.unplot(2, 2)
     }
 }
 radio.onReceivedString(function (receivedString) {
@@ -51,6 +50,7 @@ radio.onReceivedString(function (receivedString) {
 let startTime = 0
 let waitTime = 0
 let cmd: string[] = []
+let radioGroup = 0
 let saveString = ""
 let mode = 0
 let dataTime = 0
@@ -63,7 +63,7 @@ dataStratTime = 0
 dataTime = 5
 mode = 0
 saveString = ""
-let radioGroup = 0
+radioGroup = 0
 getradiogroup.initRadioGroup()
 basic.showIcon(IconNames.Heart)
 basic.forever(function () {
@@ -84,4 +84,5 @@ basic.forever(function () {
             }
         }
     }
+    led.plotBrightness(2, 2, (1 - pins.digitalReadPin(DigitalPin.P2)) * 255)
 })
