@@ -2,8 +2,7 @@ function コマンド受信 (コマンド: string) {
     serial.writeLine(コマンド)
     cmd = コマンド.split(",")
     if (cmd[1] == "RESET") {
-        radioGroup = 0
-        getradiogroup.initRadioGroup()
+        initProc()
     } else if (cmd[0] == control.deviceName()) {
         if (cmd[1].charAt(0) == "S") {
             mode = 1
@@ -19,6 +18,15 @@ function コマンド受信 (コマンド: string) {
                 `)
         }
     }
+}
+function initProc () {
+    dataStratTime = 0
+    dataTime = 5
+    mode = 0
+    saveString = ""
+    radioGroup = 0
+    getradiogroup.initRadioGroup()
+    basic.showIcon(IconNames.Heart)
 }
 function 赤外線受信 () {
     if (input.runningTime() < startTime + waitTime) {
@@ -47,25 +55,19 @@ function 赤外線受信 () {
 radio.onReceivedString(function (receivedString) {
     saveString = receivedString
 })
-let startTime = 0
-let waitTime = 0
-let cmd: string[] = []
 let radioGroup = 0
 let saveString = ""
-let mode = 0
-let dataTime = 0
 let dataStratTime = 0
+let startTime = 0
+let dataTime = 0
+let waitTime = 0
+let mode = 0
+let cmd: string[] = []
 serial.redirectToUSB()
 serial.setTxBufferSize(128)
 serial.setRxBufferSize(128)
 pins.setPull(DigitalPin.P2, PinPullMode.PullNone)
-dataStratTime = 0
-dataTime = 5
-mode = 0
-saveString = ""
-radioGroup = 0
-getradiogroup.initRadioGroup()
-basic.showIcon(IconNames.Heart)
+initProc()
 basic.forever(function () {
     if (radioGroup == 0) {
         radioGroup = getradiogroup.getRadioGroup(saveString)
