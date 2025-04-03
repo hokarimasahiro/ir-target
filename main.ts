@@ -19,7 +19,7 @@ function コマンド受信 (コマンド: string) {
 }
 function 赤外線受信 () {
     if (input.runningTime() < startTime + waitTime) {
-        if (pins.digitalReadPin(DigitalPin.P0) == 0) {
+        if (pins.digitalReadPin(DigitalPin.P2) == 0) {
             if (dataStratTime == 0) {
                 dataStratTime = input.runningTime()
             } else {
@@ -58,7 +58,7 @@ let dataStratTime = 0
 serial.redirectToUSB()
 serial.setTxBufferSize(128)
 serial.setRxBufferSize(128)
-pins.setPull(DigitalPin.P0, PinPullMode.PullNone)
+pins.setPull(DigitalPin.P2, PinPullMode.PullNone)
 dataStratTime = 0
 dataTime = 5
 mode = 0
