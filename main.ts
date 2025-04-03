@@ -2,10 +2,10 @@ function コマンド受信 (コマンド: string) {
     serial.writeLine(コマンド)
     cmd = コマンド.split(",")
     if (cmd[0] == control.deviceName()) {
-        if (cmd[1] == "START") {
+        if (cmd[2] == "START") {
             mode = 1
-            waitTime = parseFloat(cmd[2])
-            dataTime = parseFloat(cmd[3])
+            waitTime = parseFloat(cmd[3])
+            dataTime = parseFloat(cmd[4])
             startTime = input.runningTime()
             basic.showLeds(`
                 . # # # .
@@ -24,7 +24,7 @@ function 赤外線受信 () {
                 dataStratTime = input.runningTime()
             } else {
                 if (input.runningTime() > dataStratTime + dataTime) {
-                    radio.sendString("" + getradiogroup.getHostName() + "," + control.deviceName() + "," + "HIT")
+                    radio.sendString("" + cmd[1] + "," + control.deviceName() + "," + "HIT")
                     basic.showIcon(IconNames.Chessboard)
                     music._playDefaultBackground(music.builtInPlayableMelody(Melodies.PowerUp), music.PlaybackMode.UntilDone)
                     basic.clearScreen()
@@ -36,7 +36,7 @@ function 赤外線受信 () {
             led.unplot(2, 2)
         }
     } else {
-        radio.sendString("" + control.deviceName() + "," + getradiogroup.getHostName() + "," + "TO")
+        radio.sendString("" + cmd[1] + "," + control.deviceName() + "," + "TO")
         mode = 0
         basic.clearScreen()
     }
@@ -65,10 +65,10 @@ basic.showIcon(IconNames.Heart)
 basic.forever(function () {
     if (radioGroup == 0) {
         radioGroup = getradiogroup.getRadioGroup(saveString)
+        saveString = ""
         if (radioGroup != 0) {
             watchfont.showNumber2(radioGroup)
         }
-        saveString = ""
     } else {
         if (saveString != "") {
             コマンド受信(saveString)
