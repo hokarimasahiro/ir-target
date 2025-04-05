@@ -5,7 +5,7 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "pxt-watchfont": "github:hokarimasahiro/pxt-watchfont#cf8c8fa5ae14fd43a48526edacc3f94c0537ada8",
+        "pxt-watchfont": "github:hokarimasahiro/pxt-watchfont#be5c678e1db6ef193e2e0d82223a200668a8c896",
         "pxt-getradiogroup": "github:hokarimasahiro/pxt-getradiogroup#774a7c383f611abce42ae99337d45308bf8105e7"
     },
     "files": [
@@ -17,7 +17,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "7.0.57",
+        "target": "7.0.61",
         "targetId": "microbit"
     },
     "supportedTargets": [

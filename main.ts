@@ -1,22 +1,24 @@
 function コマンド受信 (コマンド: string) {
     serial.writeLine(コマンド)
     cmd = コマンド.split(",")
-    if (cmd[1] == "RESET") {
+    if (cmd[0] == control.deviceName() && cmd[1].charAt(0) == "S") {
+        mode = 1
+        waitTime = parseFloat(cmd[2])
+        dataTime = parseFloat(cmd[3])
+        startTime = input.runningTime()
+        basic.showLeds(`
+            . # # # .
+            # . . . #
+            # . . . #
+            # . . . #
+            . # # # .
+            `)
+    } else if (cmd[1] == "RESET") {
         initProc()
-    } else if (cmd[0] == control.deviceName()) {
-        if (cmd[1].charAt(0) == "S") {
-            mode = 1
-            waitTime = parseFloat(cmd[2])
-            dataTime = parseFloat(cmd[3])
-            startTime = input.runningTime()
-            basic.showLeds(`
-                . # # # .
-                # . . . #
-                # . . . #
-                # . . . #
-                . # # # .
-                `)
-        }
+    } else if (cmd[1] == "COUNTDOWN") {
+        watchfont.showNumber2(parseFloat(cmd[2]))
+    } else if (cmd[1] == "CLEAR") {
+        basic.clearScreen()
     }
 }
 function initProc () {
