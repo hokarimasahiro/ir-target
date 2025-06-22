@@ -32,7 +32,7 @@ function initProc () {
 }
 function 赤外線受信 () {
     if (input.runningTime() < startTime + waitTime) {
-        if (pins.digitalReadPin(DigitalPin.P2) == 0) {
+        if (pins.digitalReadPin(DigitalPin.P1) == 0) {
             if (dataStratTime == 0) {
                 dataStratTime = input.runningTime()
             } else {
@@ -68,7 +68,7 @@ let cmd: string[] = []
 serial.redirectToUSB()
 serial.setTxBufferSize(128)
 serial.setRxBufferSize(128)
-pins.setPull(DigitalPin.P2, PinPullMode.PullNone)
+pins.setPull(DigitalPin.P1, PinPullMode.PullNone)
 initProc()
 basic.forever(function () {
     if (radioGroup == 0) {
@@ -88,5 +88,5 @@ basic.forever(function () {
             }
         }
     }
-    led.plotBrightness(2, 2, (1 - pins.digitalReadPin(DigitalPin.P2)) * 255)
+    led.plotBrightness(2, 2, (1 - pins.digitalReadPin(DigitalPin.P1)) * 255)
 })
