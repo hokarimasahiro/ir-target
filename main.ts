@@ -16,7 +16,7 @@ function コマンド受信 (コマンド: string) {
     } else if (cmd[1] == "RESET") {
         initProc()
     } else if (cmd[1] == "COUNTDOWN") {
-        watchfont.showNumber2(parseFloat(cmd[2]))
+        basic.showNumber(parseFloat(cmd[2]))
     } else if (cmd[1] == "CLEAR") {
         basic.clearScreen()
     }
@@ -68,7 +68,7 @@ let cmd: string[] = []
 serial.redirectToUSB()
 serial.setTxBufferSize(128)
 serial.setRxBufferSize(128)
-pins.setPull(DigitalPin.P1, PinPullMode.PullNone)
+pins.setPull(DigitalPin.P1, PinPullMode.PullUp)
 initProc()
 basic.forever(function () {
     if (radioGroup == 0) {
